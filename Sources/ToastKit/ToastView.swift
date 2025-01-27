@@ -5,6 +5,7 @@ final class ToastView: UIView {
     private let stackView: UIStackView = makeStackView()
     let iconView: UIImageView = makeIconView()
     let label: UILabel = makeLabel()
+    private(set) lazy var dismissButton: UIButton = makeDismissButton()
 
     // MARK: - Init
     override init(frame: CGRect) {
@@ -35,8 +36,7 @@ extension ToastView {
         ])
         stackView.addArrangedSubview(iconView)
         stackView.addArrangedSubview(label)
-        let swipeToDismiss: UISwipeGestureRecognizer = makeSwipeToDismissGesture()
-        addGestureRecognizer(swipeToDismiss)
+        stackView.addArrangedSubview(dismissButton)
     }
 
     private static func makeStackView() -> UIStackView {
@@ -65,6 +65,21 @@ extension ToastView {
         label.font = .systemFont(ofSize: 17, weight: .semibold)
         label.numberOfLines = 0
         return label
+    }
+    
+    private func makeDismissButton() -> UIButton {
+        var config: UIButton.Configuration = .plain()
+        config.title = "Dismiss"
+        config.baseForegroundColor = .secondarySystemBackground
+        let action: UIAction = .init { [weak self] _ in
+            self?.didSwipeDown()
+        }
+        let button: UIButton = .init(
+            configuration: config,
+            primaryAction: action
+        )
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }
     
     private func makeSwipeToDismissGesture() -> UISwipeGestureRecognizer {
