@@ -32,7 +32,7 @@ extension ToastView {
             stackView.topAnchor.constraint(equalTo: topAnchor, constant: verticalPadding),
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: horizontalPadding),
             bottomAnchor.constraint(equalTo: stackView.bottomAnchor, constant: verticalPadding),
-            trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: horizontalPadding),
+            trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: .zero),
         ])
         stackView.addArrangedSubview(iconView)
         stackView.addArrangedSubview(label)
@@ -74,13 +74,13 @@ extension ToastView {
         config.baseForegroundColor = .init(dynamicProvider: { trailCollection in
             switch trailCollection.userInterfaceStyle {
             case .light, .unspecified:
-                UIColor(white: 0.3, alpha: 1)
+                UIColor(white: 0.7, alpha: 1)
 
             case .dark:
-                UIColor(white: 0.7, alpha: 1)
+                UIColor(white: 0.3, alpha: 1)
                 
             @unknown default:
-                UIColor(white: 0.3, alpha: 1)
+                UIColor(white: 0.7, alpha: 1)
             }
         })
         let action: UIAction = .init { [weak self] _ in
