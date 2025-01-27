@@ -70,7 +70,19 @@ extension ToastView {
     private func makeDismissButton() -> UIButton {
         var config: UIButton.Configuration = .plain()
         config.title = "Dismiss"
-        config.baseForegroundColor = .secondarySystemBackground
+        config.titleAlignment = .trailing
+        config.baseForegroundColor = .init(dynamicProvider: { trailCollection in
+            switch trailCollection.userInterfaceStyle {
+            case .light, .unspecified:
+                UIColor(white: 0.3, alpha: 1)
+
+            case .dark:
+                UIColor(white: 0.7, alpha: 1)
+                
+            @unknown default:
+                UIColor(white: 0.3, alpha: 1)
+            }
+        })
         let action: UIAction = .init { [weak self] _ in
             self?.didSwipeDown()
         }
@@ -78,6 +90,7 @@ extension ToastView {
             configuration: config,
             primaryAction: action
         )
+        button.titleLabel?.font = .systemFont(ofSize: 15, weight: .semibold)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }
