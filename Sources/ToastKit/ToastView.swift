@@ -32,11 +32,12 @@ extension ToastView {
             stackView.topAnchor.constraint(equalTo: topAnchor, constant: verticalPadding),
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: horizontalPadding),
             bottomAnchor.constraint(equalTo: stackView.bottomAnchor, constant: verticalPadding),
-            trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: .zero),
+            trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: horizontalPadding),
         ])
         stackView.addArrangedSubview(iconView)
         stackView.addArrangedSubview(label)
-        stackView.addArrangedSubview(dismissButton)
+        let tap: UITapGestureRecognizer = .init(target: self, action: #selector(didSwipeDown))
+        addGestureRecognizer(tap)
     }
 
     private static func makeStackView() -> UIStackView {
